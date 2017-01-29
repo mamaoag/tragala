@@ -10,7 +10,7 @@ use App\User;
 class UserManagementController extends Controller
 {
     function __construct() {
-        $this->middleware('verify');
+        $this->middleware(['admin','verify']);
     } 
 
     public function users()

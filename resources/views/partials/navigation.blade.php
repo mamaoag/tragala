@@ -10,7 +10,9 @@
         <a href="/register" class="nav-item" style="color:#fff">Register</a>
         <span class="nav-item"><a href="/login" class="button is-primary is-medium is-outlined" style="color:#fff;border-color:#fff">Login</a></span>
     @else
-        <form-post></form-post> 
+        @if(!(Route::is('home')))
+            <form-post></form-post>
+        @endif 
         <unread></unread>
         <a href="" class="nav-item" style="color:#fff"><i class="fa fa-search fa-lg"></i></a>
         <a href="" class="nav-item" style="color:#fff"><i class="fa fa-gear fa-lg"></i></a>

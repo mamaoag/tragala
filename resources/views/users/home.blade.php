@@ -9,7 +9,7 @@
     <div class="content">
         <div class="columns">
             <div class="column is-multiline is-mobile" style="margin-left:10px">
-                <post></post>
+               <post></post>
                 <br>
             </div>
             <div class="column is-3"></div>

@@ -1,5 +1,15 @@
 <template>
     <div class="">
+        <br>
+        <nav class="level container">
+            <div class="level-left">
+                <div class="level-item">
+                    <h2 class="subtitle">User Management
+                    <span class="menu-label">Manage Your Users</span></h2>
+                </div>
+            </div>
+            <div class="right"><button type="submit" class="button is-danger"><i class="fa fa-user-plus fa-lg"></i> &nbsp;Create Admin</button></div>
+        </nav>
         <table class="table is-striped">
             <thead>
                 <tr>
@@ -9,6 +19,7 @@
                     <th>Email</th>
                     <th>Banned</th>
                     <th>Role</th>
+                    <th>Infractions</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,6 +40,12 @@
                         <span v-show="user.usergroup == 2">Known Personality</span>
                         <span v-show="user.usergroup == 3">Administrator</span>
                         <span v-show="user.usergroup == 4">Head Administrator</span>
+                    </td>
+                    <td>
+                        <div>
+                            <span v-show="user.warning == 0">No warnings</span>
+                            <span v-show="user.warning != 0">{{user.warning}}</span>
+                        </div>
                     </td>
                     <td>
                         <button class="button is-danger" v-show="user.usergroup == 1 || user.usegroup == 2" @click="promote(user.id)"><i class="fa fa-angle-double-up fa-lg"></i></button>

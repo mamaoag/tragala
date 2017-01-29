@@ -9,7 +9,7 @@ class Post extends Model
    public $with = ['user'];
    
    protected $fillable = [
-       'user_id', 'category', 'title', 'description', 'filename'
+       'user_id', 'category', 'title', 'description', 'filename', 'stats', 'total_comment'
    ];
 
    public function user()

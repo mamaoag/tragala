@@ -18,7 +18,11 @@ class ProfileController extends Controller
     {
         $user = User::where('username',$username)->first();
         
-        return view('users.profile',['user' => $user]);
+        if($user)
+                return view('users.profile',['user' => $user]);
+        
+
+        abort(404);
     }
 
     public function edit_profile($username)

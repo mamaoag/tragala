@@ -26,6 +26,10 @@ Vue.component('profile', require('./components/Profile.vue'));
 Vue.component('users', require('./components/Users.vue'));
 Vue.component('form-post', require('./components/Form.vue'));
 Vue.component('edit', require('./components/Edit.vue'));
+Vue.component('latest', require('./components/Latest.vue'));
+Vue.component('hot', require('./components/Hot.vue'));
+Vue.component('report', require('./components/Report.vue'));
+Vue.component('report-list', require('./components/ReportList.vue'));
 
 const app = new Vue({
     el: '#app',

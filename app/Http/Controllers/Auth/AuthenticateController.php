@@ -41,19 +41,22 @@ class AuthenticateController extends Controller
             $check->save();
             return $check;
         }
-         return User::create([
+         $user = User::create([
                 'first_name' => $user->user['first_name'],
+                'verified' => true,
                 'last_name' => $user->user['last_name'],
                 'username'=> strtolower(str_replace(' ','',$user->user['first_name']).$user->user['last_name']),
                 'provider' => $provider,
                 'avatar' => $user->avatar_original,
                 'provider_id' => $user->id,
                 'email' => $user->getEmail(),
-                'gender' => $user->user['gender'],
-                'verified' => true,
-                'activated' => true,
+                'gender' => $user->user['gender'],                
                 'hash' => str_random(10),
             ]);   
         
+        $user->activated = true;
+        $user->save();
+
+        return $user;
     }
 }

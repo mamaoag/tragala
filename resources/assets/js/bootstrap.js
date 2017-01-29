@@ -18,7 +18,7 @@ require('noty');
 
 window.Vue = require('vue');
 require('vue-resource');
-
+require('moment');
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware
@@ -45,7 +45,5 @@ import Echo from "laravel-echo"
      cluster: 'ap1'
 });
 
-Pusher.log = function(message){
-    window.console.log(message)
-}
+
 

@@ -36,15 +36,16 @@
     </style>
 </head>
 <body>
-    <div id="app" class="columns is-gapless">
+    <div id="app">
+    @include('partials.navigation')
+    <div class="columns is-gapless">
         @if(Auth::check())
         <div class="column is-2">
             @include('partials.menu')
         </div>
         @endif
         <div class="column">
-            @include('partials.navigation')
-            @if(Auth::check() && Route::is('home'))
+            @if(Auth::check() && (Route::is('home') || Request::is('trending') || Request::is('hot') || Request::is('latest')))
                 @include('partials.second-navigation')
             @endif
             @yield('content')
@@ -65,6 +66,7 @@
             </div>
         </div>
     </footer>
+    </div>
     <script src="/js/app.js"></script>
     <script>
         @if(Session::has('error'))

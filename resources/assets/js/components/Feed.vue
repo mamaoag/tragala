@@ -11,7 +11,7 @@
         <div class="media">
         <div class="media-left">
             <figure class="image is-32x32">
-            <img :src="post.user.avatar" alt="Image">
+            <img :src="post.user.avatar" alt="Image" style="border-radius: 50%">
             </figure>
         </div>
         <div class="media-content">
@@ -23,9 +23,14 @@
         <div class="content">
         {{post.description}}
         <br>
-        <small>{{post.created_at}}</small>
+        <small>{{dateFromNow(post.created_at)}}  - <span> 
+            <span v-if="post.category == 'Food'"><i class="fa fa-coffee fa-lg"> </i> Food</span>
+            <span v-if="post.category == 'Travel'"><i class="fa fa-plane fa-lg"> </i> Travel</span>
+            <span v-if="post.category == 'Experience'"><i class="fa fa-bed fa-lg"> </i> Experience</span>
+            </span>
+            </small>
         </div>
-        <actions :id="post.id" :uid="post.user.id"></actions>
+        <actions :id="post.id" :uid="post.user.id" :user="user_id"></actions>
     </div>
     </div>
     </div>
@@ -33,13 +38,18 @@
 </template>
 
 <script>
+    import moment from 'moment'
     export default{
         mounted() {
-            this.feed()
+            this.feed()            
+            this.userid()
         },
         data(){
-            loading: true
-        },        
+            return {
+                loading: true,
+                user_id: 0
+            }
+        },   
         methods: {
             feed() {
                 this.$http.get('/feed')
@@ -48,6 +58,15 @@
                             this.$store.commit('add_post',post)
                         })
                     })
+            },
+            dateFromNow(e) {
+                return  moment(e).fromNow()
+            },
+            userid(){
+                this.$http.get('/usr/session').then(r =>{
+                    console.log(r.body.id)
+                    this.user_id = r.body.id
+                })
             }
         },
         computed: {

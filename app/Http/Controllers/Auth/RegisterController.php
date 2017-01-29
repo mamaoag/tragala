@@ -58,7 +58,7 @@ class RegisterController extends Controller
     {
         $check = User::where('hash',$code)->where('verified',false)->first();
         if($check){
-            User::where('hash',$code)->update(['verified' => true]);
+            User::where('hash',$code)->update(['verified' => true,'activated' => true]);
             return redirect()->to('/login')->withInfo('Your account has been verified');
         }else{
             abort(404);

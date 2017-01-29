@@ -11,7 +11,7 @@
         <div class="media-content">
             <div class="content">
             <p>
-                <strong>{{comment.user.first_name}} {{comment.user.last_name}}</strong> <small>@ {{comment.user.username}}</small> <small>31m</small>
+                <strong>{{comment.user.first_name}} {{comment.user.last_name}}</strong> <small>@ {{comment.user.username}}</small> <small>{{dateFromNow(comment.created_at)}}</small>
                 <br>
                 {{comment.body}}
             </p>
@@ -31,6 +31,7 @@
     </div>
 </template>textarea
 <script>
+    import moment from 'moment';
     export default{
         mounted() {
             this.getcomments()
@@ -59,7 +60,9 @@
                         this.loading = false
                     })
             },
-
+            dateFromNow(e) {
+                return moment(e).fromNow()
+            },
             create_comment(e) {
                 e.preventDefault()
                 var formData = new FormData();

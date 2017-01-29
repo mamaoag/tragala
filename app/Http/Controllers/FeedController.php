@@ -24,4 +24,9 @@ class FeedController extends Controller
        return Post::where('user_id',$id)
                     ->orderBy('created_at','desc')->get();
    }
+   
+   public function user()
+   {
+       return Auth::user();
+   }
 }
