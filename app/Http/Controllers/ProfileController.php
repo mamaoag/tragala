@@ -19,8 +19,7 @@ class ProfileController extends Controller
         $user = User::where('username',$username)->first();
         
         if($user)
-                return view('users.profile',['user' => $user]);
-        
+                return view('users.profile',['user' => $user]);   
 
         abort(404);
     }

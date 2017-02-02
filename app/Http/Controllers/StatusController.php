@@ -103,4 +103,14 @@ class StatusController extends Controller
     {
         return Comment::where('post_id',$id)->get();
     }
+
+    function safe($id, Request $request)
+    {
+        return \App\Safe::create([
+                'post_id' => $id,
+                'is_safe' => $request->safe,
+                'user_id' => Auth::user()->id
+        ]);           
+
+    }
 }

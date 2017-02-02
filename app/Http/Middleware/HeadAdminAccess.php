@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
+use Auth;
 class HeadAdminAccess
 {
     /**
@@ -13,8 +13,12 @@ class HeadAdminAccess
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+     public function handle($request, Closure $next, $guard = null)
     {
-        return $next($request);
+        if (Auth::guard($guard)->check() && Auth::user()->usergroup == 4) {
+            return $next($request);
+        }
+
+        return redirect('/home');
     }
 }

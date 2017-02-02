@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
+        ConsoleTVs\Charts\ChartsServiceProvider::class,
         //
 
         /*
@@ -228,6 +229,7 @@ return [
 
         //Package
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
     ],
 
 ];

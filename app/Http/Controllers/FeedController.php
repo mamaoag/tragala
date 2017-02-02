@@ -15,7 +15,7 @@ class FeedController extends Controller
     
     $posts = Post::where('user_id',Auth::user()->id)
                     ->orWhereIn('user_id', Auth::user()->following()->pluck('follower_id'))
-        ->orderBy('created_at','desc')->get();
+                    ->orderBy('created_at','desc')->get();
     return $posts;
    }
 

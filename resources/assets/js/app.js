@@ -30,6 +30,7 @@ Vue.component('latest', require('./components/Latest.vue'));
 Vue.component('hot', require('./components/Hot.vue'));
 Vue.component('report', require('./components/Report.vue'));
 Vue.component('report-list', require('./components/ReportList.vue'));
+Vue.component('audit', require('./components/Audit.vue'));
 
 const app = new Vue({
     el: '#app',

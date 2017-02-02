@@ -26,8 +26,9 @@ Login
                 <span class="help is-danger">{{$errors->first('password')}}</span>
                 @endif
             </p>
-            <button class="button is-danger is-medium">Login</button>
+            <button class="button is-danger">Login</button>
             <a href="{{url('/auth/facebook')}}" class="button facebook"><i class="fa fa-facebook-square"></i> &nbsp;Login via Facebook</a>
+            <a href="/forget" class="button is-link">Forget password</a>
             {{csrf_field()}}
         </form>
     </div>

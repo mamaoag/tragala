@@ -30,7 +30,10 @@ Route::get('register', 'Auth\RegisterController@display');
 Route::post('register', 'Auth\RegisterController@valid');
 Route::post('logout', 'Auth\LoginController@logout');
 Route::get('/u/{id}', 'ProfileController@profile')->name('profile');
-
+Route::get('/forget', function(){
+        return view('auth.forget');
+});
+Route::post('/forget', 'Auth\LoginController@forget_password');
 Route::get('notifications', 'ProfileController@notifications')->name('notifs');
 
 //OATH
@@ -64,9 +67,21 @@ Route::get('/usr/session','FeedController@user');
 
 //ADMIN
 Route::get('/all', 'Admin\UserManagementController@users');
+Route::get('admin/dashboard', function(){
+    \App\Audit::create([
+            'admin_id' => Auth::user()->id,
+            'action_code' => 0
+    ]);
+
+    return view('admin.dashboard');
+})->middleware(['admin','verify']);
 Route::get('/admin/users', function(){
+        \App\Audit::create([
+                'admin_id' => Auth::user()->id,
+                'action_code' => 1
+        ]);
     return view('admin.users');
-});
+})->middleware(['admin','verify']);;
 
 Route::get('/ban/{id}', 'Admin\UserManagementController@ban');
 Route::get('/unban/{id}', 'Admin\UserManagementController@unban');
@@ -91,11 +106,41 @@ Route::get('/api/secret/route/make/admin', function(){
     $user = Auth::user();
     $user->usergroup = 3;
     $user->save();
+
+    \App\Audit::create([
+            'admin_id' => Auth::user()->id,
+            'action_code' => 5
+    ]);
     return redirect('/home')->withInfo('Administrator');
-});
+})->middleware(['admin','verify']);;
 
 Route::get('/noaction/{id}', 'Admin\ReportController@no_action');
 Route::get('/infract/{id}/report/{report}/post/{post}', 'Admin\ReportController@infract_user');
-Route::get('/admin/reports/user', function(){
+Route::get('/admin/reports/users', function(){
+    \App\Audit::create([
+            'admin_id' => Auth::user()->id,
+            'action_code' => 3
+    ]);
     return view('admin.reports');  
+})->middleware(['admin','verify']);;
+
+Route::get('/admin/reports/statistics/users', 'Admin\StatisticsController@users');
+Route::get('/admin/reports/statistics/posts', 'Admin\StatisticsController@posts');
+Route::get('/api/admin/audit', 'Admin\AuditController@audit');
+Route::get('/admin/audit', function(){
+    \App\Audit::create([
+            'admin_id' => Auth::user()->id,
+            'action_code'  => 6
+    ]);
+
+    return view('admin.audit');
+})->middleware(['superadmin','verify']);
+
+Route::get('/safe', 'StatusController@safe');
+Route::get('/safe/count', function(){
+return \App\Safe::all()->count();
 });
+
+Route::get('/api/unique', 'Admin\AdminController@unique');
+
+Route::get('/api/newposts', 'Admin\AdminController@new_posts');

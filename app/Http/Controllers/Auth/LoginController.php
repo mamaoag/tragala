@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ForgetPassword;
 
 class LoginController extends Controller
 {
@@ -39,6 +42,39 @@ class LoginController extends Controller
             return redirect()->back()->withError('Invalid Username/Password or Account does not exist');
         }
 
+    }
+
+    public function forget_password(Request $request)
+    {
+            $this->validate($request,[
+                    'email' => 'required|email'
+            ]);
+            $user = \App\User::where('email',$request->email)->first();
+            if(!$user){
+                return redirect()->to('/forget')->withError('No email existed');
+            }
+            $code = str_random(6);
+            \App\Forget::create([
+                'email' => $request->email,
+                'token' => $code
+            ]);
+            
+            #Mail::to($request->email)->send(new ForgetPassword($user,$code));
+            return redirect()->to('/forget/success');
+    }
+
+    public function change_password($token, Request $request)
+    {
+            $detail = \App\Forget::where('token',$token)->first();
+
+            $user = \App\User::where('email',$detail->email)->first();
+
+            $this->validate($request,[
+                'password' => 'required|min:2|confirmed'
+            ]);
+
+            $user->password = Hash::make($request->password);
+            return redirect()->to('/login')->withInfo('Success, your password has been changed');
     }
 
     public function logout()

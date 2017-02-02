@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Auth;
 
 class ReportController extends Controller
 {
@@ -22,6 +23,11 @@ class ReportController extends Controller
         $report->status = 1;
         $report->save();
 
+        \App\Audit::create([
+                'admin_id' => Auth::user()->id,
+                'action_code' => 31,
+                'report_id' => $id
+        ]);
         return 'ok';
     }
 
@@ -50,6 +56,13 @@ class ReportController extends Controller
         $user->save();
         
         $this->warnedPost($pid);
+
+        \App\Audit::create([
+                'admin_id' => Auth::user()->id,
+                'action_code' => 32,
+                'user_id' => $id,
+                'report_id' => $rid
+        ]);
         //\App\User::find($id)->notify(new \App\Notifications\Infraction(Auth::user()));
         return ['infracted'];
     }

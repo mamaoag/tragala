@@ -34,6 +34,7 @@
         background:#ff7473;
     }
     </style>
+    @yield('styles')
 </head>
 <body>
     <div id="app">

@@ -22,7 +22,7 @@
     .upload {
         width: 0.1px;
         height: 0.1px;
-        opacity: 0;
+        opacity: 0; 
         overflow: hidden;
         position: absolute;
         z-index: -1;
@@ -34,6 +34,7 @@
         background:#ff7473;
     }
     </style>
+    @yield('styles')
 </head>
 <body id="app">
     @include('partials.navigation')
@@ -44,9 +45,6 @@
         </div>
         @endif
         <div class="column">
-            @if(Auth::check() && (Route::is('home') || Request::is('trending') || Request::is('hot') || Request::is('latest')))
-                @include('partials.second-navigation')
-            @endif
             @yield('content')
             @if(Auth::check())
                 <notification :id="{{Auth::user()->id}}"></notification>
